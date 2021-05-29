@@ -64,10 +64,13 @@ class List {
     constructor() {
         this.head = null;
         this.tail = null;
+        this.length = 0; // for autometic length count
     }
 
     append(value) {
         let node = makeNode(value)
+
+        this.length++;
 
         if(!this.tail) {
             // head and tail are same
@@ -84,6 +87,8 @@ class List {
     prepend(value) {
         let node = makeNode(value);
 
+        this.length++;
+
         if(!this.head) {
             this.head = this.tail = node;
             return node;
@@ -95,6 +100,7 @@ class List {
         return node;
     }
 
+    // remove first element
     removeFirst() {
         if(!this.head){
             return null
@@ -108,9 +114,12 @@ class List {
             this.tail = null;
         }
 
+        this.length--;
+
         return nodeToRemove;
     }
 
+    // removing last element
     removeLast() {
         if(!this.tail) {
             // if empty list
@@ -130,14 +139,58 @@ class List {
         while(findNodeBefore.next !== this.tail){
             findNodeBefore = findNodeBefore.next;
         }
-        //console.log(findNodeBefore.value, findNodeBefore.next)
+
         this.tail = findNodeBefore;
         findNodeBefore.next = null;
-        //console.log(findNodeBefore.value, findNodeBefore.next)
 
-        
+        this.length--;
 
         return findNodeBefore;
+    }
+
+    // manually length counting
+    getLength() {
+        let current = this.head;
+        let count = 0;
+
+        while(current){
+            count++;
+            current = current.next;
+        }
+
+        return count;
+    }
+
+    // inserting node in the middle
+    insert(value, index) {
+        // if index is less or equal 0, or falsy value
+        if(index <= 0 || !index) {
+            return this.prepend(value);
+        }
+
+        // if index is greater or equal total length
+        if(index >= this.length) {
+            return this.append(value);
+        }
+
+        let previous = null;
+        let current = this.head;
+        let currentIndex = 0;
+
+        let node = makeNode(value);
+        while(current && currentIndex !== index) {
+            previous = current;
+            current = current.next;
+            currentIndex++;
+        }
+
+        node.next = previous.next;
+        previous.next = node;
+
+        this.length++;
+
+        return node;
+
     }
 
     print() {
@@ -164,10 +217,16 @@ test.append(1);
 //test.print()
 
 //test.removeFirst()
-test.removeLast()
-test.removeLast()
-test.removeLast()
 //test.removeLast()
+//test.removeLast()
+//test.removeLast()
+//test.removeLast()
+
+test.insert(5, 0);
+test.insert(0, 7);
+
+test.insert(10, 2);
 
 
 test.print()
+//console.log(test.length)
