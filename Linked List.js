@@ -113,31 +113,30 @@ class List {
 
     removeLast() {
         if(!this.tail) {
-            //console.log('abc')
+            // if empty list
             return null
         }
         
         let findNodeBefore = this.head;
-        //console.log(findNodeBefore.value)
-        while(findNodeBefore){
-            //console.log(findNodeBefore.value);
-            if(findNodeBefore.next === this.tail) {
-                break;
-            }
+        
+        //if only one node
+        if(findNodeBefore === this.tail) {
+            this.head = this.tail = null;
+
+            return findNodeBefore;
+        }
+
+        // find node just before last node
+        while(findNodeBefore.next !== this.tail){
             findNodeBefore = findNodeBefore.next;
         }
-
+        //console.log(findNodeBefore.value, findNodeBefore.next)
         this.tail = findNodeBefore;
+        findNodeBefore.next = null;
+        //console.log(findNodeBefore.value, findNodeBefore.next)
 
-        if(!this.tail) {
-            this.head = null;
-        }
+        
 
-        //console.log(this.tail.next)
-
-        // if(this.tail === this.head){
-        //     this.head = null;
-        // }
         return findNodeBefore;
     }
 
@@ -152,7 +151,7 @@ class List {
 }
 
 let test = new List();
-test.print();
+//test.print();
 
 test.append(4);
 test.append(3);
@@ -168,7 +167,7 @@ test.append(1);
 test.removeLast()
 test.removeLast()
 test.removeLast()
-test.removeLast()
+//test.removeLast()
 
 
 test.print()
