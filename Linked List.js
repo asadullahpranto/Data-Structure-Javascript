@@ -190,7 +190,27 @@ class List {
         this.length++;
 
         return node;
+    }
 
+    remove(index) {
+        if(index < 0 || index > this.length) {
+            return null;
+        }
+
+        let previous = null;
+        let current = this.head;
+        let currentIndex = 0;
+
+        while(current && currentIndex !== index) {
+            previous = current;
+            current = current.next;
+            currentIndex++;
+        }
+
+        previous.next = current.next;
+        current.next = null;
+
+        return current;
     }
 
     print() {
@@ -222,10 +242,11 @@ test.append(1);
 //test.removeLast()
 //test.removeLast()
 
-test.insert(5, 0);
-test.insert(0, 7);
+//test.insert(5, 0); // prepend()
+//test.insert(0, 7); // append()
+//test.insert(10, 2); // insert in the index no 2
 
-test.insert(10, 2);
+test.remove(3);
 
 
 test.print()
